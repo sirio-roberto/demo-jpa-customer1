@@ -1,5 +1,6 @@
 package com.example.demo.customer;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -9,23 +10,21 @@ import java.util.List;
 @Service
 public class CustomerService {
 
+    final private CustomerRepository customerRepository;
+
+    @Autowired
+    public CustomerService(CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+
 
     public List<Customer> getCustomers() {
-        return List.of(
-                new Customer(
-                        1L,
-                        "Sirius Junior",
-                        "sirius@gmail.com",
-                        "TSE",
-                        LocalDate.of(1997, Month.JULY, 12),
-                        21),
-                new Customer(
-                        2L,
-                        "Joao Silva",
-                        "joao.silva@gmail.com",
-                        "Seller",
-                        LocalDate.of(1977, Month.AUGUST, 16),
-                        31)
-        );
+        return customerRepository.findAll();
+    }
+
+    public void insertCustomer(Customer customer) {
+        if (customerRepository.existsById(customer.getId()))
+            throw new IllegalStateException("Unexpected error! Id " + customer.getId() + " already exist in the database");
+        customerRepository.save(customer);
     }
 }
