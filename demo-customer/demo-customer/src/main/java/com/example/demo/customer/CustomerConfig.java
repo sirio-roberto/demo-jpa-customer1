@@ -21,14 +21,12 @@ public class CustomerConfig {
                     "Joao Silva",
                     "joao.silva@gmail.com",
                     "Seller",
-                    LocalDate.of(1977, AUGUST, 16),
-                    31);
+                    LocalDate.of(1977, AUGUST, 16));
             Customer sirius = new Customer(
                             "Sirius Junior",
                             "sirius@gmail.com",
                             "TSE",
-                            LocalDate.of(1997, JULY, 12),
-                            21);
+                            LocalDate.of(1997, JULY, 12));
 
             repository.saveAll(List.of(joao, sirius));
         };

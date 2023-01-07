@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 @Entity
 @Table
@@ -23,26 +24,25 @@ public class Customer {
     private String email;
     private String job;
     private LocalDate birthDate;
+    @Transient
     private Integer age;
 
     public Customer() {
     }
 
-    public Customer(Long id, String name, String email, String job, LocalDate birthDate, Integer age) {
+    public Customer(Long id, String name, String email, String job, LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.job = job;
         this.birthDate = birthDate;
-        this.age = age;
     }
 
-    public Customer(String name, String email, String job, LocalDate birthDate, Integer age) {
+    public Customer(String name, String email, String job, LocalDate birthDate) {
         this.name = name;
         this.email = email;
         this.job = job;
         this.birthDate = birthDate;
-        this.age = age;
     }
 
     public Long getId() {
@@ -86,11 +86,7 @@ public class Customer {
     }
 
     public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     @Override
